@@ -25,7 +25,7 @@ export default function Dashboard({ auth, posts, user_portfolio }) {
                             Welcome Back {auth.user.name}
                         </div>
                         <div className="pl-4 text-gray-900 flex flex-col">
-                            <p className="py-2 px-2 md:w-120 text-md font-bold">
+                            <p className="py-2 px-2 md:w-120 w-[20vh] text-md font-bold">
                                 Location :{" "}
                                 {user_portfolio && user_portfolio.country
                                     ? [
@@ -52,7 +52,7 @@ export default function Dashboard({ auth, posts, user_portfolio }) {
                         Your Posts :
                     </p>
                     <div className=" flex md:ml-2 justify-center self-center">
-                        <div className="flex flex-col">
+                        <div className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3 8 flex flex-col self-center">
                             {posts && posts.length > 0 ? (
                                 posts.map((post) => (
                                     <PostCard key={post.post_id} post={post} />

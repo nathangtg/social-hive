@@ -59,7 +59,7 @@ export default function Browse({ auth, users, formattedPosts }) {
                             placeholder="Search users..."
                             value={searchTerm}
                             onChange={handleSearchChange}
-                            className="p-2 m-2 border rounded-md self-center"
+                            className="p-2 border rounded-md self-center"
                         />
                     </div>
                     <ul>
@@ -70,7 +70,7 @@ export default function Browse({ auth, users, formattedPosts }) {
                             }
                             return (
                                 <div
-                                    className="bg-white md:w-[100vh] p-4 rounded-md m-4 w-[60vh]"
+                                    className="bg-white md:w-[100vh] p-4 rounded-md m-4 w-[50vh] justify-center self-center"
                                     key={user.id}
                                 >
                                     <UserButton
@@ -88,7 +88,7 @@ export default function Browse({ auth, users, formattedPosts }) {
                         <div className="self-center mt-6">
                             <h2>Browse Posts</h2>
                         </div>
-                        <div className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 flex flex-col self-center">
+                        <div className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 flex flex-col self-center justify-center">
                             {formattedPosts &&
                                 formattedPosts.map((formattedPost) => (
                                     <PostCard

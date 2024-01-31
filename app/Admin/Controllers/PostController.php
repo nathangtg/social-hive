@@ -28,7 +28,7 @@ class PostController extends AdminController
 
         $grid->column('post_id', __('Post id'));
         $grid->column('user_id', __('User id'));
-        $grid->column('image')->image();
+        $grid->column('image', __('Image'));
         $grid->column('captions', __('Captions'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
@@ -67,9 +67,19 @@ class PostController extends AdminController
 
         $form->number('post_id', __('Post id'));
         $form->number('user_id', __('User id'));
-        $form->image('image', __('Image'));
+        $form->image('image', __('Image'))->move('storage/public/images');
         $form->textarea('captions', __('Captions'));
 
         return $form;
+    }
+
+    public function destroy($id)
+    {
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        admin_toastr(__('Post deleted successfully'));
+
+        return redirect()->route('admin.posts.index');
     }
 }
