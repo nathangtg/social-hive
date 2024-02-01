@@ -5,6 +5,7 @@ import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationFor
 import UpdateUserDescription from "./Partials/UpdateUserDescription";
 import { Head } from "@inertiajs/react";
 import LocationComplete from "./Partials/LocationComplete";
+import UploadProfilePictureForm from "./Partials/UpdateProfilePictureForm";
 
 export default function Edit({ auth, mustVerifyEmail, status }) {
     return (
@@ -38,6 +39,10 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
 
                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                         <UpdateUserDescription className="max-w-xl" />
+                    </div>
+
+                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                        <UploadProfilePictureForm className="max-w-xl" />
                     </div>
 
                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">

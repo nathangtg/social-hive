@@ -19,7 +19,8 @@ class UserPortfolio extends Model
         'user_description',
         'country',
         'state',
-        'city'
+        'city',
+        'profile_picture_path'
     ];
 
 

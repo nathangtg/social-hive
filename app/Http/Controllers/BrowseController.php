@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Models\UserPortfolio;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,8 +14,8 @@ class BrowseController extends Controller
 
         $users = User::all();
         $posts = Post::all();
-
         $formattedPosts = $posts->map(function ($post) {
+
             return [
                 'post_id' => $post->post_id,
                 'user_id' => $post->user_id,
@@ -27,11 +28,5 @@ class BrowseController extends Controller
         });
 
         return Inertia::render('Browse', compact('users', 'formattedPosts'));
-    }
-
-    public function show($name){
-        // Find the user with the name 'Lee Phyo Hein'
-        $users = User::where('id', '1')->get();
-        return Inertia::render('Browse', compact('users'));
     }
 }

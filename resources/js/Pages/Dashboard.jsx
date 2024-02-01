@@ -21,11 +21,25 @@ export default function Dashboard({ auth, posts, user_portfolio }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 md:w-[100vh]">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
+                        <div className=" px-6 py-3 text-gray-900 flex items-center">
+                            {/* Profile Picture */}
+                            {user_portfolio &&
+                                user_portfolio.profile_picture_path && (
+                                    <img
+                                        src={
+                                            user_portfolio.profile_picture_path
+                                        }
+                                        alt="Profile"
+                                        className="rounded-full h-12 w-12 object-cover mr-4"
+                                    />
+                                )}
+                            {auth.user.name}
+                        </div>
                         <div className="px-6 py-3 text-gray-900">
                             Welcome Back {auth.user.name}
                         </div>
                         <div className="pl-4 text-gray-900 flex flex-col">
-                            <p className="py-2 px-2 md:w-120 w-[20vh] text-md font-bold">
+                            <p className="py-2 px-2 md:w-[100vh] w-[20vh] text-md font-bold">
                                 Location :{" "}
                                 {user_portfolio && user_portfolio.country
                                     ? [

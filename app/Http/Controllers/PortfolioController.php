@@ -52,6 +52,32 @@ class PortfolioController extends Controller
         return Redirect::route('profile.edit')->with('success', 'Location added successfully.');
     }
 
+    // public function addProfilePicture(Request $request): RedirectResponse
+    // {
+
+    //     Log::info('Add Profile Picture Request:', $request->all());
+    //     $request->validate([
+    //         'profile_picture_path' => ['required', 'image', 'max:1024'],
+    //     ]);
+
+    //     $portfolio = $request->user()->userPortfolio()->firstOrCreate([
+    //         'user_id' => $request->user()->id
+    //     ]);
+
+    //     // Store the profile picture and get the path
+    //     $path = $request->file('profile_picture_path')->store('public/images', 'public');
+
+    //     // Update the path to be consistent with the store method
+    //     $path = 'storage/' . $path;
+
+    //     // Set the profile_picture_path field with the modified path
+    //     $portfolio->profile_picture_path = $path;
+    //     $portfolio->save();
+
+    //     return Redirect::route('profile.edit')->with('success', 'Profile picture added successfully.');
+    // }
+
+
     public function index (Request $request)
     {
         $portfolio = $request->user()->portfolio()->first();

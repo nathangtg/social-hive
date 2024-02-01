@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/portfolio/addDescription', [PortfolioController::class, 'addDescription'])->name('portfolio.addDescription');
     Route::post('/portfolio/addLocation', [PortfolioController::class, 'addLocation'])->name('portfolio.addLocation');
+    Route::post('/profile/addProfilePicture', [ProfileController::class, 'addProfilePicture'])->name('profile.addProfilePicture');
 });
 
 // ! BROWSE ROUTING

@@ -5,6 +5,9 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 
 export default function Browse({ auth, users, formattedPosts }) {
+    console.log(users);
+    console.log(formattedPosts);
+
     const [searchTerm, setSearchTerm] = useState("");
     const usersArray = Array.isArray(users) ? users : [users];
 
@@ -76,10 +79,11 @@ export default function Browse({ auth, users, formattedPosts }) {
                                     <UserButton
                                         email={user.email}
                                         name={user.name}
+                                        image={user.profile_picture_path}
                                         onClick={() =>
                                             fetchUserInfo(user.email)
                                         }
-                                    ></UserButton>
+                                    />
                                 </div>
                             );
                         })}
