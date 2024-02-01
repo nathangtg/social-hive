@@ -6,6 +6,7 @@ use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfilePageController;
+use App\Http\Controllers\UserRelationshipController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -45,6 +46,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/portfolio/addDescription', [PortfolioController::class, 'addDescription'])->name('portfolio.addDescription');
     Route::post('/portfolio/addLocation', [PortfolioController::class, 'addLocation'])->name('portfolio.addLocation');
     Route::post('/profile/addProfilePicture', [ProfileController::class, 'addProfilePicture'])->name('profile.addProfilePicture');
+    Route::post('/user/follow/{userId}', [UserRelationshipController::class, 'follow'])->name('user.follow');
+    Route::post('/user/unfollow/{userId}', [UserRelationshipController::class, 'unfollow'])->name('user.unfollow');
 });
 
 // ! BROWSE ROUTING

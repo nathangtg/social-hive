@@ -21,6 +21,7 @@ class PostController extends Controller
         $path = 'storage/' .$path;
 
         $post = new Post();
+        $post->post_id = $request->post_id;
         $post->user_id = Auth::id();
         $post->captions = $request->caption;
         $post->image = $path;

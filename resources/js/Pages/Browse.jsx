@@ -79,7 +79,15 @@ export default function Browse({ auth, users, formattedPosts }) {
                                     <UserButton
                                         email={user.email}
                                         name={user.name}
-                                        image={user.profile_picture_path}
+                                        image={
+                                            user.profile_picture_path
+                                                ? `http://127.0.0.1:8000/storage${user.profile_picture_path.substring(
+                                                      user.profile_picture_path.indexOf(
+                                                          "/public"
+                                                      )
+                                                  )}`
+                                                : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                                        }
                                         onClick={() =>
                                             fetchUserInfo(user.email)
                                         }

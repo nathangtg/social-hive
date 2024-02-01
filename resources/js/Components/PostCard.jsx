@@ -2,7 +2,10 @@ import React from "react";
 
 export default function PostCard({ post }) {
     return (
-        <div className="max-w-sm rounded overflow-hidden shadow-lg my-2">
+        <div
+            className="max-w-sm rounded overflow-hidden shadow-lg my-2"
+            key={post.post_id}
+        >
             {post.image && (
                 <img className="w-full" src={post.image} alt="Post" />
             )}

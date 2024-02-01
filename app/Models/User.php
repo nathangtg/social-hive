@@ -52,4 +52,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function userPortfolio(){
         return $this->hasOne(UserPortfolio::class);
     }
+
+    public function test()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'is_following_user_id');
+    }
+
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'is_following_user_id', 'user_id');
+    }
 }
