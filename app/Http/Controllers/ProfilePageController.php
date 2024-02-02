@@ -18,20 +18,27 @@ class ProfilePageController extends Controller
 
         $formattedPosts = $posts->map(function ($post) {
             return [
-                'post_id' => $post->id, // Assuming 'id' is the correct column name for post ID
+                'post_id' => $post->post_id,
                 'user_id' => $post->user_id,
                 'image' => asset('' . $post->image),
                 'captions' => $post->captions,
-                'user_name' => $post->user->name, // Access the name property from the user relationship
-                'created_at' => $post->created_at,
-                'updated_at' => $post->updated_at,
+                'user_name' => $post->user->name,
+                'created_at' => $post->created_at->toDateTimeString(),
+                'updated_at' => $post->updated_at->toDateTimeString(),
             ];
         });
 
+        // Check if the authenticated user is following the profile user
+        $isFollowing = false;
+        if (auth()->user()) {
+            $isFollowing = auth()->user()->following()->where('user_id', $user->id)->exists();
+        }
+
         return Inertia::render('ProfilePage', [
             'profileUser' => $user,
-            'posts' => $formattedPosts, // Send the formatted posts
+            'posts' => $formattedPosts,
             'user_portfolio' => $portfolio,
+            'followStatus' => $isFollowing, // Add this line to pass the following status to the frontend
         ]);
     }
 }

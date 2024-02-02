@@ -7,20 +7,19 @@ import { useState } from "react";
 export default function Dashboard({
     auth,
     posts,
+    formattedPosts,
     user_portfolio,
     profileUser,
+    followStatus,
 }) {
-    console.log(posts);
-    console.log(user_portfolio);
-    console.log(profileUser);
+    const [isFollowing, setIsFollowing] = useState(followStatus);
 
-    const [isFollowing, setIsFollowing] = useState(false); // Initialize isFollowing state
+    const isOwnProfile = auth.user.id === profileUser.id;
 
     const handleSubmit = async (userId) => {
+        const action = followStatus ? "Unfollow" : "Follow";
         try {
-            const url = `http://127.0.0.1:8000/user/${
-                isFollowing ? "unfollow" : "follow"
-            }/${userId}`;
+            const url = `http://127.0.0.1:8000/user/${action}/${userId}`;
             const response = await fetch(url, {
                 method: "POST",
                 headers: {
@@ -29,18 +28,31 @@ export default function Dashboard({
                         .querySelector('meta[name="csrf-token"]')
                         .getAttribute("content"),
                 },
-                body: JSON.stringify(payload),
+                body: JSON.stringify({ userId }), // Ensure you have the correct payload here
             });
 
             if (!response.ok) {
                 throw new Error("There was an error processing your request.");
             }
 
-            setIsFollowing(!isFollowing); // Toggle the following state
+            // Get the updated status from the server response
+            const data = await response.json();
+            if (data.isFollowing !== undefined) {
+                setIsFollowing(data.isFollowing);
+            } else {
+                // Fallback to toggling if the server doesn't respond with a status
+                setIsFollowing(!isFollowing);
+            }
         } catch (error) {
             console.error("Error:", error);
         }
     };
+
+    // ! DEBUGGING PURPOSES
+    console.log(profileUser);
+    console.log(followStatus);
+    console.log(posts);
+    // ! DO NOT TOUCH
 
     return (
         <AuthenticatedLayout
@@ -87,13 +99,30 @@ export default function Dashboard({
                                       ].join(", ")
                                     : "This user hasn't set a location yet"}
                             </p>
-                            <FollowButton
-                                userId={profileUser.id}
-                                onSubmit={handleSubmit}
-                                isFollowing={isFollowing} // Pass isFollowing as a prop
-                                onFollow={() => setIsFollowing(true)} // Callback to update isFollowing
-                                onUnfollow={() => setIsFollowing(false)} // Callback to update isFollowing
-                            ></FollowButton>
+                            {isOwnProfile ? (
+                                <p
+                                    className="text-center font-semibold bg-white
+                                 text-black border-black hover:bg-gray-300
+                                 focus:bg-gray-300 active:bg-gray-400
+                                 justify-center
+                                 inline-flex items-center px-4 py-2 border rounded-md text-xs
+                                 uppercase tracking-widest transition ease-in-out duration-150 "
+                                >
+                                    Your own account
+                                </p>
+                            ) : (
+                                <>
+                                    <FollowButton
+                                        userId={profileUser.id}
+                                        onSubmit={handleSubmit}
+                                        isFollowing={isFollowing}
+                                        onFollow={() => setIsFollowing(true)}
+                                        onUnfollow={() => setIsFollowing(false)}
+                                    />
+
+                                    {/* Additional profile information here */}
+                                </>
+                            )}
                         </div>
 
                         <div className="pl-6 text-gray-900 flex flex-col">

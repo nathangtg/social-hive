@@ -34,7 +34,7 @@ const FollowButton = ({ userId, isFollowing, onFollow, onUnfollow }) => {
 
     return (
         <button
-            className={`inline-flex items-center px-4 py-2 border rounded-md font-semibold text-xs uppercase tracking-widest transition ease-in-out duration-150 ${
+            className={`justify-center inline-flex items-center px-4 py-2 border rounded-md font-semibold text-xs uppercase tracking-widest transition ease-in-out duration-150 ${
                 following
                     ? "bg-white text-black border-black hover:bg-gray-300 focus:bg-gray-300 active:bg-gray-400"
                     : "bg-gray-800 text-white border-transparent hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900"
