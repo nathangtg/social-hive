@@ -144,7 +144,11 @@ export default function Dashboard({
                         <div className="flex flex-col">
                             {posts && posts.length > 0 ? (
                                 posts.map((post) => (
-                                    <PostCard key={post.post_id} post={post} />
+                                    <PostCard
+                                        key={post.post_id}
+                                        post={post}
+                                        showDeleteButton={false}
+                                    />
                                 ))
                             ) : (
                                 <p className="text-center">

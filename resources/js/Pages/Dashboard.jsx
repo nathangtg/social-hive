@@ -30,7 +30,7 @@ export default function Dashboard({ auth, posts, user_portfolio }) {
 
             // Remove the post from the UI
             const updatedPosts = posts.filter(
-                (post) => post.post_id !== postId
+                (post) => post.post_id !== post_id
             );
             setPosts(updatedPosts); // Assuming you have a state called `posts` that holds the list
         } catch (error) {
@@ -100,7 +100,12 @@ export default function Dashboard({ auth, posts, user_portfolio }) {
                         <div className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3 8 flex flex-col self-center">
                             {posts && posts.length > 0 ? (
                                 posts.map((post) => (
-                                    <PostCard key={post.post_id} post={post} />
+                                    <PostCard
+                                        key={post.post_id}
+                                        post={post}
+                                        showDeleteButton={true}
+                                        onDelete={handleDeletePost}
+                                    />
                                 ))
                             ) : (
                                 <p>
