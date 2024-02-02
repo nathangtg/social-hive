@@ -7,6 +7,37 @@ export default function Dashboard({ auth, posts, user_portfolio }) {
     console.log(posts);
     console.log(user_portfolio);
 
+    const handleDeletePost = async (post_id) => {
+        if (!confirm("Are you sure you want to delete this post?")) {
+            return;
+        }
+
+        try {
+            const url = `http://127.0.0.1:8000/post/${post_id}`;
+            const response = await fetch(url, {
+                method: "DELETE", // Make sure to use the DELETE HTTP method
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": document
+                        .querySelector('meta[name="csrf-token"]')
+                        .getAttribute("content"),
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to delete the post.");
+            }
+
+            // Remove the post from the UI
+            const updatedPosts = posts.filter(
+                (post) => post.post_id !== postId
+            );
+            setPosts(updatedPosts); // Assuming you have a state called `posts` that holds the list
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    };
+
     return (
         <AuthenticatedLayout
             user={auth.user}

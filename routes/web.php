@@ -48,6 +48,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/addProfilePicture', [ProfileController::class, 'addProfilePicture'])->name('profile.addProfilePicture');
     Route::post('/user/follow/{userId}', [UserRelationshipController::class, 'follow'])->name('user.follow');
     Route::post('/user/unfollow/{userId}', [UserRelationshipController::class, 'unfollow'])->name('user.unfollow');
+    Route::delete('/post/{post_id}', [PostController::class, 'destroy'])->name('post.destroy');
+
 });
 
 // ! BROWSE ROUTING

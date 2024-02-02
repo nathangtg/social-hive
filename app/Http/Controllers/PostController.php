@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class PostController extends Controller
@@ -33,6 +34,17 @@ class PostController extends Controller
     public function create()
     {
         return Inertia::render('CreatePost');
+    }
+
+    public function destroy($post_id)
+    {
+        Log::info('Deleting post with id: ' . $post_id);
+
+        $post = Post::findOrFail($post_id);
+        // Add authorization check here if needed
+        $post->delete();
+
+        return response()->json(['success' => 'Post deleted successfully']);
     }
 }
 
