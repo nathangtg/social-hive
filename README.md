@@ -16,22 +16,6 @@
     </a>
 </p>
 
-<p align="center">
-    <!-- Update URLs with your actual project's CI status, downloads, version, and license badges -->
-    <a href="https://github.com/yourusername/social-hive/actions">
-        <img src="https://github.com/yourusername/social-hive/workflows/tests/badge.svg" alt="Build Status">
-    </a>
-    <a href="https://packagist.org/packages/yourusername/social-hive">
-        <img src="https://img.shields.io/packagist/dt/yourusername/social-hive" alt="Total Downloads">
-    </a>
-    <a href="https://packagist.org/packages/yourusername/social-hive">
-        <img src="https://img.shields.io/packagist/v/yourusername/social-hive" alt="Latest Stable Version">
-    </a>
-    <a href="https://packagist.org/packages/yourusername/social-hive">
-        <img src="https://img.shields.io/packagist/l/yourusername/social-hive" alt="License">
-    </a>
-</p>
-
 <h2 align="center">About Social Hive</h2>
 
 <p align="center">Social Hive is a side portfolio project that was made with the help of ReactJS, Laravel, OpenAdmin, and Inertia. This project also uses front-end tooling such as Tailwind and Bootstrap, therefore, this website utilizes the use of Server Side Rendering and, in this case, it can boost the website's performance. It also emphasizes on security principles such as file name and password hashing and server side rendering.</p>
