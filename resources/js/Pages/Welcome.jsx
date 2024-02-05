@@ -4,7 +4,7 @@ import { useEffect } from "react";
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
     useEffect(() => {
         document.title = "Social Hive";
-        document.body.style.backgroundColor = "#f5d0a9";
+        document.body.style.backgroundImage = `url("https://files.oaiusercontent.com/file-295HTfKYCtH6DyNpIHgdt4dn?se=2024-02-03T13%3A31%3A34Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D6015f888-b4e2-46cb-bfed-1c100adca0ef.webp&sig=DFxDGJlI6S8NdH5pD/qyxJgV6gBm7l/Qf4cxgCCVg8c%3D")`;
         document.body.style.backgroundSize = "cover";
     });
 
@@ -15,7 +15,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                 {auth.user ? (
                     <Link
                         href={route("dashboard")}
-                        className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                        className="font-semibold text-gray-600 hover:text-gray-900 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                     >
                         Dashboard
                     </Link>
@@ -23,14 +23,14 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     <>
                         <Link
                             href={route("login")}
-                            className="font-semibold text-gray-600 hover:text-brown dark:text-gray-400 dark:hover:text-amber-800 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                            className="font-semibold text-orange-900 hover:text-brown  dark:hover:text-amber-800 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                         >
                             Log in
                         </Link>
 
                         <Link
                             href={route("register")}
-                            className="ms-4 font-semibold text-gray-600 hover:text-amber-800 dark:text-gray-400 dark:hover:text-amber-800 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                            className="ms-4 font-semibold text-orange-900 hover:text-amber-800 dark:hover:text-amber-800 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                         >
                             Register
                         </Link>

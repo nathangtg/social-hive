@@ -15,6 +15,7 @@ class ProfilePageController extends Controller
         $user = User::where('email', $email)->firstOrFail();
         $posts = Post::where('user_id', $user->id)->get();
         $portfolio = UserPortfolio::where('user_id', $user->id)->first();
+        $followersAmount = $user->followers()->count();
 
         $formattedPosts = $posts->map(function ($post) {
             return [
@@ -38,6 +39,7 @@ class ProfilePageController extends Controller
             'profileUser' => $user,
             'posts' => $formattedPosts,
             'user_portfolio' => $portfolio,
+            'followersAmount' => $followersAmount,
             'followStatus' => $isFollowing, // Add this line to pass the following status to the frontend
         ]);
     }

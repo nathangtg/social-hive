@@ -1,6 +1,12 @@
 import React from "react";
 
-export default function PostCard({ post, posts, setPosts, showDeleteButton }) {
+export default function PostCard({
+    post,
+    posts,
+    setPosts,
+    showDeleteButton,
+    onDelete,
+}) {
     const handleDeletePost = async (post_id) => {
         if (!confirm("Are you sure you want to delete this post?")) {
             return;
@@ -45,7 +51,10 @@ export default function PostCard({ post, posts, setPosts, showDeleteButton }) {
                 )}
                 <p className="text-gray-700 text-base">{post.captions}</p>
                 {showDeleteButton && (
-                    <button onClick={() => onDelete(post.post_id)}>
+                    <button
+                        className="px-2 py-1 my-1 text-sm bg-red-600 rounded-md"
+                        onClick={() => onDelete(post.post_id)}
+                    >
                         Delete Post
                     </button>
                 )}

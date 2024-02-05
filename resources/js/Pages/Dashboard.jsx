@@ -3,19 +3,25 @@ import PostCard from "@/Components/PostCard";
 import { Head } from "@inertiajs/react";
 import NavLink from "@/Components/NavLink";
 
-export default function Dashboard({ auth, posts, user_portfolio }) {
+export default function Dashboard({
+    auth,
+    posts,
+    user_portfolio,
+    followersAmount,
+}) {
     console.log(posts);
+    console.log(followersAmount);
     console.log(user_portfolio);
 
     const handleDeletePost = async (post_id) => {
-        if (!confirm("Are you sure you want to delete this post?")) {
+        if (!window.confirm("Are you sure you want to delete this post?")) {
             return;
         }
 
         try {
             const url = `http://127.0.0.1:8000/post/${post_id}`;
             const response = await fetch(url, {
-                method: "DELETE", // Make sure to use the DELETE HTTP method
+                method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
                     "X-CSRF-TOKEN": document
@@ -28,11 +34,10 @@ export default function Dashboard({ auth, posts, user_portfolio }) {
                 throw new Error("Failed to delete the post.");
             }
 
-            // Remove the post from the UI
-            const updatedPosts = posts.filter(
-                (post) => post.post_id !== post_id
+            // Update the posts state to reflect the change
+            setPosts((currentPosts) =>
+                currentPosts.filter((post) => post.post_id !== post_id)
             );
-            setPosts(updatedPosts); // Assuming you have a state called `posts` that holds the list
         } catch (error) {
             console.error("Error:", error);
         }
@@ -43,7 +48,18 @@ export default function Dashboard({ auth, posts, user_portfolio }) {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Dashboard
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                        {/* Profile Picture */}
+                        {user_portfolio &&
+                            user_portfolio.profile_picture_path && (
+                                <img
+                                    src={user_portfolio.profile_picture_path}
+                                    alt="Profile"
+                                    className="rounded-full h-12 w-12 object-cover mr-4"
+                                />
+                            )}
+                        {auth.user.name}
+                    </div>
                 </h2>
             }
         >
@@ -52,25 +68,11 @@ export default function Dashboard({ auth, posts, user_portfolio }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 md:w-[100vh]">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
-                        <div className=" px-6 py-3 text-gray-900 flex items-center">
-                            {/* Profile Picture */}
-                            {user_portfolio &&
-                                user_portfolio.profile_picture_path && (
-                                    <img
-                                        src={
-                                            user_portfolio.profile_picture_path
-                                        }
-                                        alt="Profile"
-                                        className="rounded-full h-12 w-12 object-cover mr-4"
-                                    />
-                                )}
-                            {auth.user.name}
-                        </div>
                         <div className="px-6 py-3 text-gray-900">
                             Welcome Back {auth.user.name}
                         </div>
                         <div className="pl-4 text-gray-900 flex flex-col">
-                            <p className="py-2 px-2 md:w-[100vh] w-[20vh] text-md font-bold">
+                            <p className="py-0.5 px-2 md:w-[100vh] w-[25vh] text-md font-bold">
                                 Location :{" "}
                                 {user_portfolio && user_portfolio.country
                                     ? [
@@ -79,6 +81,10 @@ export default function Dashboard({ auth, posts, user_portfolio }) {
                                           user_portfolio.city,
                                       ].join(", ")
                                     : "You haven't set a location yet"}
+                            </p>
+                            <p className="px-2">
+                                <span className=" font-bold">Followers :</span>{" "}
+                                {followersAmount}
                             </p>
                             <p className="font-weight-bolder text-2xl pl-2 pt-3">
                                 Description :

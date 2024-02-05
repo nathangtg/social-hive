@@ -17,6 +17,7 @@ class DashboardController extends Controller
                      ->where('user_id', $user->id)
                      ->get();
         $user_portfolio = UserPortfolio::where('user_id', $user->id)->first();
+        $followersAmount = $user->followers()->count();
 
         // Format the posts for the frontend
         $formattedPosts = $posts->map(function ($post) {
@@ -36,7 +37,9 @@ class DashboardController extends Controller
                 'user' => $user, // Pass the authenticated user's data
             ],
             'posts' => $formattedPosts,
+            'followersAmount' => $followersAmount, // Pass the followers amount to the frontend
             'user_portfolio' => $user_portfolio,
         ]);
     }
+
 }

@@ -7,6 +7,7 @@ export default function CreatePost({ auth }) {
     const [caption, setCaption] = useState("");
     const [file, setFile] = useState(null);
     const [previewUrl, setPreviewUrl] = useState(null);
+    const [postSuccess, setPostSuccess] = useState(false); // New state for tracking post success
 
     // Handle caption change
     const handleCaptionChange = (event) => {
@@ -47,7 +48,18 @@ export default function CreatePost({ auth }) {
                     "X-CSRF-TOKEN": csrfToken,
                 },
             });
-            // Handle response
+            if (response.ok) {
+                // Set postSuccess to true to show the success message
+                setPostSuccess(true);
+
+                // Optionally, reset the form state
+                setCaption("");
+                setFile(null);
+                setPreviewUrl(null);
+            } else {
+                // Handle non-successful response
+                setPostSuccess(false);
+            }
         } catch (error) {
             // Handle error
         }
@@ -128,6 +140,18 @@ export default function CreatePost({ auth }) {
                         >
                             Create Post
                         </button>
+                        {postSuccess && ( // Conditional rendering for the success message
+                            <div className="text-center py-2 lg:px-4">
+                                <div
+                                    className="p-2 items-start justify-start text-green-500 leading-none lg:rounded-full flex lg:inline-flex"
+                                    role="alert"
+                                >
+                                    <span className="font-semibold mr-2 text-left flex-auto mt-2">
+                                        Post successful!
+                                    </span>
+                                </div>
+                            </div>
+                        )}
                     </form>
                 </div>
             </div>

@@ -3,6 +3,7 @@ import PostCard from "@/Components/PostCard";
 import { Head } from "@inertiajs/react";
 import FollowButton from "@/Components/FollowButton";
 import { useState } from "react";
+import ChatButton from "@/Components/ChatButton";
 
 export default function Dashboard({
     auth,
@@ -11,6 +12,7 @@ export default function Dashboard({
     user_portfolio,
     profileUser,
     followStatus,
+    followersAmount,
 }) {
     const [isFollowing, setIsFollowing] = useState(followStatus);
 
@@ -89,7 +91,7 @@ export default function Dashboard({
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-4">
                         <div className="p-6 text-gray-900 flex flex-col">
                             <p>Email: {profileUser.email}</p>
-                            <p className="py-2 pr-2 md:w-120 text-md font-bold">
+                            <p className="py-0.5 pr-2 md:w-120 text-md font-bold">
                                 Location :{" "}
                                 {user_portfolio && user_portfolio.country
                                     ? [
@@ -98,6 +100,10 @@ export default function Dashboard({
                                           user_portfolio.city,
                                       ].join(", ")
                                     : "This user hasn't set a location yet"}
+                            </p>
+                            <p>
+                                <span className=" font-bold">Followers : </span>
+                                {followersAmount}
                             </p>
                             {isOwnProfile ? (
                                 <p
@@ -120,7 +126,7 @@ export default function Dashboard({
                                         onUnfollow={() => setIsFollowing(false)}
                                     />
 
-                                    {/* Additional profile information here */}
+                                    <ChatButton targetUser={profileUser.id} />
                                 </>
                             )}
                         </div>
