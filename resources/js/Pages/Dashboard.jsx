@@ -12,6 +12,37 @@ export default function Dashboard({
     console.log(posts);
     console.log(followersAmount);
     console.log(user_portfolio);
+    const handleLike = async (post_id) => {
+        try {
+            const url = `http://127.0.0.1:8000/post/like/${post_id}`;
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": document
+                        .querySelector('meta[name="csrf-token"]')
+                        .getAttribute("content"),
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to like the post.");
+            }
+
+            const { likeCount } = await response.json(); // Destructure likeCount from the response
+
+            // Assuming setPosts is a function to update your posts state
+            setPosts((currentPosts) =>
+                currentPosts.map((post) =>
+                    post.post_id === post_id
+                        ? { ...post, likes: likeCount }
+                        : post
+                )
+            );
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    };
 
     const handleDeletePost = async (post_id) => {
         if (!window.confirm("Are you sure you want to delete this post?")) {
@@ -111,6 +142,7 @@ export default function Dashboard({
                                         post={post}
                                         showDeleteButton={true}
                                         onDelete={handleDeletePost}
+                                        onLike={handleLike}
                                     />
                                 ))
                             ) : (

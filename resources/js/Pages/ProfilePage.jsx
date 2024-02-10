@@ -5,18 +5,59 @@ import FollowButton from "@/Components/FollowButton";
 import { useState } from "react";
 import ChatButton from "@/Components/ChatButton";
 
-export default function Dashboard({
+export default function ProfilePage({
     auth,
     posts,
-    formattedPosts,
     user_portfolio,
     profileUser,
     followStatus,
     followersAmount,
 }) {
+    const [localPosts, setLocalPosts] = useState(posts);
     const [isFollowing, setIsFollowing] = useState(followStatus);
-
     const isOwnProfile = auth.user.id === profileUser.id;
+
+    const handleLike = async (post_id) => {
+        const updatedPosts = localPosts.map((post) => {
+            if (post.post_id === post_id) {
+                const updatedLikeStatus = !post.isLikedByCurrentUser;
+                return {
+                    ...post,
+                    isLikedByCurrentUser: updatedLikeStatus,
+                    likes: updatedLikeStatus
+                        ? post.likes + 1
+                        : Math.max(0, post.likes - 1),
+                };
+            }
+            return post;
+        });
+
+        setLocalPosts(updatedPosts);
+
+        try {
+            const response = await fetch(
+                `http://127.0.0.1:8000/post/like/${post_id}`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": document
+                            .querySelector('meta[name="csrf-token"]')
+                            .getAttribute("content"),
+                    },
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to like the post.");
+            }
+            // Assuming no need to update local state based on the response since it's optimistic
+        } catch (error) {
+            console.error("Error:", error);
+            // Revert optimistic update if server update fails
+            setLocalPosts(localPosts); // Consider deeper clone or better revert strategy
+        }
+    };
 
     const handleSubmit = async (userId) => {
         const action = followStatus ? "Unfollow" : "Follow";
@@ -154,6 +195,7 @@ export default function Dashboard({
                                         key={post.post_id}
                                         post={post}
                                         showDeleteButton={false}
+                                        onLike={() => handleLike(post.post_id)}
                                     />
                                 ))
                             ) : (

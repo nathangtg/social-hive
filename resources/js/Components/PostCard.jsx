@@ -1,12 +1,35 @@
 import React from "react";
+import { useState } from "react";
 
 export default function PostCard({
     post,
     posts,
     setPosts,
     showDeleteButton,
+    onLike,
     onDelete,
 }) {
+    const [isLiked, setIsLiked] = useState(post.isLikedByCurrentUser);
+    const [likeCount, setLikeCount] = useState(post.likeCount);
+
+    const handleLikeClick = async () => {
+        const newIsLiked = !isLiked;
+        // Optimistically update UI
+        setIsLiked(newIsLiked);
+        setLikeCount((prev) => (newIsLiked ? prev + 1 : Math.max(0, prev - 1))); // Prevent negative count
+
+        try {
+            // Send like/unlike action to the server
+            await onLike(post.post_id);
+            // If necessary, here you can handle the server's response to confirm the action
+        } catch (error) {
+            // If there's an error, revert the optimistic update
+            setIsLiked(isLiked);
+            setLikeCount(isLiked ? likeCount - 1 : likeCount + 1);
+            console.error("Failed to update like status:", error);
+        }
+    };
+
     const handleDeletePost = async (post_id) => {
         if (!confirm("Are you sure you want to delete this post?")) {
             return;
@@ -50,14 +73,27 @@ export default function PostCard({
                     </div>
                 )}
                 <p className="text-gray-700 text-base">{post.captions}</p>
-                {showDeleteButton && (
+                <div className="flex flex-col">
+                    {showDeleteButton && (
+                        <button
+                            className="px-4 py-2 my-1 text-sm font-bold text-white bg-red-500 hover:bg-red-600 rounded focus:outline-none focus:shadow-outline transform transition-colors duration-150 ease-in-out"
+                            onClick={() => onDelete(post.post_id)}
+                        >
+                            Delete Post
+                        </button>
+                    )}
+
                     <button
-                        className="px-2 py-1 my-1 text-sm bg-red-600 rounded-md"
-                        onClick={() => onDelete(post.post_id)}
+                        onClick={handleLikeClick}
+                        className={`${
+                            isLiked
+                                ? "bg-red-500 hover:bg-red-600"
+                                : "bg-green-500 hover:bg-green-600"
+                        } text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline transform transition-colors duration-150 ease-in-out`}
                     >
-                        Delete Post
+                        {isLiked ? "Unlike" : "Like"}: {likeCount}
                     </button>
-                )}
+                </div>
             </div>
         </div>
     );

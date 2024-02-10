@@ -9,7 +9,66 @@ export default function Browse({ auth, users, formattedPosts }) {
     console.log(formattedPosts);
 
     const [searchTerm, setSearchTerm] = useState("");
+    const [posts, setPosts] = useState(formattedPosts);
+
     const usersArray = Array.isArray(users) ? users : [users];
+
+    const handleLike = async (post_id) => {
+        // First, optimistically update the UI to reflect the like/unlike action
+        setPosts((currentPosts) =>
+            currentPosts.map((post) => {
+                if (post.post_id === post_id) {
+                    return {
+                        ...post,
+                        // Toggle the isLikedByCurrentUser state
+                        isLikedByCurrentUser: !post.isLikedByCurrentUser,
+                        // Adjust the like count based on the new isLikedByCurrentUser state
+                        likes: post.isLikedByCurrentUser
+                            ? post.likes - 1
+                            : post.likes + 1,
+                    };
+                }
+                return post;
+            })
+        );
+
+        try {
+            const url = `http://127.0.0.1:8000/post/like/${post_id}`;
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": document
+                        .querySelector('meta[name="csrf-token"]')
+                        .getAttribute("content"),
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to like the post.");
+                // If the request fails, revert the optimistic UI update
+                // Note: This reversion might need to be adjusted based on the actual error handling strategy
+            }
+            // Consider handling the response data here, if needed
+        } catch (error) {
+            console.error("Error:", error);
+            // Revert the optimistic update in case of an error
+            setPosts((currentPosts) =>
+                currentPosts.map((post) => {
+                    if (post.post_id === post_id) {
+                        return {
+                            ...post,
+                            isLikedByCurrentUser: !post.isLikedByCurrentUser,
+                            likes: post.isLikedByCurrentUser
+                                ? post.likes + 1
+                                : post.likes - 1,
+                        };
+                    }
+                    return post;
+                })
+            );
+        }
+    };
 
     function fetchUserInfo(email) {
         fetch("/api/profile/info", {
@@ -107,6 +166,9 @@ export default function Browse({ auth, users, formattedPosts }) {
                                         key={formattedPost.post_id}
                                         post={formattedPost}
                                         showDeleteButton={false}
+                                        onLike={() =>
+                                            handleLike(formattedPost.post_id)
+                                        }
                                     />
                                 ))}
                         </div>
