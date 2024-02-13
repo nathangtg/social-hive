@@ -1,5 +1,6 @@
 <?php
 
+use App\Admin\Controllers\ChMessageController;
 use App\Admin\Controllers\PostController;
 use App\Admin\Controllers\UserController;
 use App\Admin\Controllers\UserPortfolioController;
@@ -20,4 +21,6 @@ Route::group([
     $router->resource('users', UserController::class);
     $router->resource('posts', PostController::class);
     $router->resource('user-portfolios', UserPortfolioController::class);
+    $router->resource('ch-messages', ChMessageController::class);
+
 });
