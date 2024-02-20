@@ -131,7 +131,7 @@ export default function Dashboard({
                         {/* Render user's posts */}
                     </div>
                     <p className="text-2xl font-weight-bold mb-2 md:ml-2 ml-4 flex justify-center">
-                        Your Posts :
+                        Home Posts :
                     </p>
                     <div className=" flex md:ml-2 justify-center self-center">
                         <div className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3 8 flex flex-col self-center">
@@ -140,7 +140,11 @@ export default function Dashboard({
                                     <PostCard
                                         key={post.post_id}
                                         post={post}
-                                        showDeleteButton={true}
+                                        showDeleteButton={
+                                            post.user_id === auth.user.id
+                                                ? true
+                                                : false
+                                        }
                                         onDelete={handleDeletePost}
                                         onLike={handleLike}
                                     />

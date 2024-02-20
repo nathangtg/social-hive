@@ -13,9 +13,15 @@ class DashboardController extends Controller
     public function showDashboard()
     {
         $user = Auth::user();
-        $posts = Post::with(['user', 'likes']) // Eager load the user and likes relationships to optimize performance
-                     ->where('user_id', $user->id)
+
+        // Get IDs of users that the current user is following
+        $followingIds = $user->following()->pluck('users.id');
+
+        // Include posts from the current user and the users they are following
+        $posts = Post::with(['user', 'likes'])
+                     ->whereIn('user_id', $followingIds->push($user->id)) // Include current user's posts as well
                      ->get();
+
         $user_portfolio = UserPortfolio::where('user_id', $user->id)->first();
         $followersAmount = $user->followers()->count();
 
@@ -47,6 +53,7 @@ class DashboardController extends Controller
             'user_portfolio' => $user_portfolio, // Ensure sensitive information is not exposed unintentionally
         ]);
     }
+
 
 
 }
