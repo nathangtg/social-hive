@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class PostController extends Controller
@@ -38,6 +39,9 @@ class PostController extends Controller
 
     public function destroy($post_id)
     {
+
+        DB::table('likes')->where('post_id', $post_id)->delete();
+
         Log::info('Deleting post with id: ' . $post_id);
 
         $post = Post::findOrFail($post_id);

@@ -53,7 +53,7 @@ Route::middleware('auth')->group(function () {
 
 });
 
-// ! BROWSE ROUTING
+// ! BROWSE ROUTINGs
 Route::get('/browse', [BrowseController::class, 'index'])->name('Browse');
 Route::get('/browse/{id}', [BrowseController::class, 'show'])->name('Browse.show');
 

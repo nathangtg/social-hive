@@ -82,7 +82,7 @@ export default function PostCard({
                             className="pt-1"
                             size={24}
                             // className="px-4 py-2 my-1 text-sm font-bold text-white bg-red-500 hover:bg-red-600 rounded focus:outline-none focus:shadow-outline transform transition-colors duration-150 ease-in-out"
-                            onClick={() => onDelete(post.post_id)}
+                            onClick={() => handleDeletePost(post.post_id)}
                         >
                             Delete Post
                         </FaTrash>
