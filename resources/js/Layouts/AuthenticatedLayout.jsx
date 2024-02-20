@@ -48,6 +48,13 @@ export default function Authenticated({ user, header, children }) {
                                 >
                                     Create Post
                                 </NavLink>
+
+                                <NavLink
+                                    href="http://127.0.0.1:8000/chatify/"
+                                    active={route().current("chatify")}
+                                >
+                                    Hive Chatify
+                                </NavLink>
                             </div>
                         </div>
 
@@ -166,6 +173,14 @@ export default function Authenticated({ user, header, children }) {
                         >
                             Create Post
                         </ResponsiveNavLink>
+
+                        <a
+                            className="w-full flex items-start ps-3 pe-4 py-2 border-l-4"
+                            href={route("chatify")}
+                            active={route().current("chatify")}
+                        >
+                            Hive Chatify
+                        </a>
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
