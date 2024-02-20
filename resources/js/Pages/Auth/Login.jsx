@@ -16,8 +16,7 @@ export default function Login({ status, canResetPassword }) {
 
     useEffect(() => {
         document.title = "Social Hive";
-        document.body.style.backgroundImage = `url("https://files.oaiusercontent.com/file-295HTfKYCtH6DyNpIHgdt4dn?se=2024-02-03T13%3A31%3A34Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D6015f888-b4e2-46cb-bfed-1c100adca0ef.webp&sig=DFxDGJlI6S8NdH5pD/qyxJgV6gBm7l/Qf4cxgCCVg8c%3D")`;
-        document.body.style.backgroundSize = "cover";
+        document.body.style.backgroundColor = "#FFD700"; // Yellow background color
         return () => {
             reset("password");
         };
@@ -25,7 +24,6 @@ export default function Login({ status, canResetPassword }) {
 
     const submit = (e) => {
         e.preventDefault();
-
         post(route("login"));
     };
 
@@ -39,7 +37,7 @@ export default function Login({ status, canResetPassword }) {
                 </div>
             )}
 
-            <form onSubmit={submit}>
+            <form onSubmit={submit} className="bg-yellow-100 p-6 rounded-lg">
                 <div>
                     <InputLabel htmlFor="email" value="Email" />
 
