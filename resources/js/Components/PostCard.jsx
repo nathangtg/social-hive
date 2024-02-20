@@ -1,5 +1,8 @@
 import React from "react";
 import { useState } from "react";
+import { FaTrash } from "react-icons/fa";
+import { AiOutlineLike } from "react-icons/ai";
+import { BiSolidLike } from "react-icons/bi"; // Import BiSolidLike icon
 
 export default function PostCard({
     post,
@@ -73,26 +76,34 @@ export default function PostCard({
                     </div>
                 )}
                 <p className="text-gray-700 text-base">{post.captions}</p>
-                <div className="flex flex-col">
+                <div className="flex pt-2">
                     {showDeleteButton && (
-                        <button
-                            className="px-4 py-2 my-1 text-sm font-bold text-white bg-red-500 hover:bg-red-600 rounded focus:outline-none focus:shadow-outline transform transition-colors duration-150 ease-in-out"
+                        <FaTrash
+                            className="pt-1"
+                            size={24}
+                            // className="px-4 py-2 my-1 text-sm font-bold text-white bg-red-500 hover:bg-red-600 rounded focus:outline-none focus:shadow-outline transform transition-colors duration-150 ease-in-out"
                             onClick={() => onDelete(post.post_id)}
                         >
                             Delete Post
-                        </button>
+                        </FaTrash>
                     )}
-
-                    <button
-                        onClick={handleLikeClick}
-                        className={`${
-                            isLiked
-                                ? "bg-red-500 hover:bg-red-600"
-                                : "bg-green-500 hover:bg-green-600"
-                        } text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline transform transition-colors duration-150 ease-in-out`}
-                    >
-                        {isLiked ? "Unlike" : "Like"}: {likeCount}
-                    </button>
+                    {/* Conditionally render the appropriate icon */}
+                    <div className=" inline-block">
+                        {isLiked ? (
+                            <BiSolidLike
+                                className="pl-2"
+                                size={28}
+                                onClick={handleLikeClick}
+                            ></BiSolidLike>
+                        ) : (
+                            <AiOutlineLike
+                                className="pl-2"
+                                size={28}
+                                onClick={handleLikeClick}
+                            ></AiOutlineLike>
+                        )}
+                    </div>
+                    <p className="pt-[0.3vh] pl-[0.4vw]">{likeCount}</p>
                 </div>
             </div>
         </div>
