@@ -8,6 +8,8 @@ use App\Models\UserPortfolio;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
+use Illuminate\Support\Facades\Storage;
+
 class ProfilePageController extends Controller
 {
     public function showProfile($email)
@@ -26,9 +28,10 @@ class ProfilePageController extends Controller
             });
 
             return [
+                'user_profile_picture' => $post->user->profile_picture_path ? url($post->user->profile_picture_path) : url(''), // Access the profile picture path from the user relationship and generate the correct URL
                 'post_id' => $post->post_id,
                 'user_id' => $post->user_id,
-                'image' => asset($post->image),
+                'image' => $post->image ? asset($post->image) : '',
                 'captions' => $post->captions,
                 'user_name' => $post->user->name,
                 'created_at' => $post->created_at->toDateTimeString(),
@@ -49,9 +52,9 @@ class ProfilePageController extends Controller
             'posts' => $formattedPosts,
             'user_portfolio' => $portfolio,
             'followersAmount' => $followersAmount,
+            'followingAmount' => $user->following()->count(), // Include the following amount
             'followStatus' => $isFollowing,
         ]);
     }
-
 }
 

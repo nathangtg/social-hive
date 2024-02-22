@@ -58,6 +58,8 @@ class ProfileController extends Controller
              'user_id' => $request->user()->id
          ]);
 
+         $user = $request->user();
+
          // Store the profile picture and get the path
          $path = $request->file('profile_picture_path')->store('public/images', 'public');
 
@@ -65,8 +67,8 @@ class ProfileController extends Controller
          $path = 'storage/' . $path;
 
          // Set the profile_picture_path field with the modified path
-         $portfolio->profile_picture_path = $path;
-         $portfolio->save();
+         $user->profile_picture_path = $path;
+         $user->save();
 
          return Redirect::route('profile.edit')->with('success', 'Profile picture added successfully.');
      }

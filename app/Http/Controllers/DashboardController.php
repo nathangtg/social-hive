@@ -33,6 +33,7 @@ class DashboardController extends Controller
 
 
             return [
+                'user_profile_picture' => $post->user->profile_picture_path, // Access the profile picture path from the user relationship
                 'post_id' => $post->post_id, // Make sure this is the correct primary key attribute for your Post model
                 'user_id' => $post->user_id,
                 'image' => $post->image,
@@ -52,6 +53,8 @@ class DashboardController extends Controller
             'posts' => $formattedPosts,
             'followersAmount' => $followersAmount, // Pass the followers amount to the frontend
             'user_portfolio' => $user_portfolio, // Ensure sensitive information is not exposed unintentionally
+            'user' => $user,
+            'followingAmount' => $user->following()->count(), // Include the following amount
         ]);
     }
 

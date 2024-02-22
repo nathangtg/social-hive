@@ -1,13 +1,17 @@
+// Import necessary modules
 import React from "react";
 import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { AiOutlineLike } from "react-icons/ai";
 import { BiSolidLike } from "react-icons/bi"; // Import BiSolidLike icon
 
+// Define the PostCard component
 export default function PostCard({
-    post,
+    post = {}, // Making post optional with default value as an empty object
     posts,
+    user_profile_picture,
     setPosts,
+    date_posted,
     showDeleteButton,
     onLike,
     onDelete,
@@ -15,6 +19,7 @@ export default function PostCard({
     const [isLiked, setIsLiked] = useState(post.isLikedByCurrentUser);
     const [likeCount, setLikeCount] = useState(post.likeCount);
 
+    // Function to handle like click
     const handleLikeClick = async () => {
         const newIsLiked = !isLiked;
         // Optimistically update UI
@@ -33,6 +38,7 @@ export default function PostCard({
         }
     };
 
+    // Function to handle post deletion
     const handleDeletePost = async (post_id) => {
         if (!confirm("Are you sure you want to delete this post?")) {
             return;
@@ -64,47 +70,76 @@ export default function PostCard({
         }
     };
 
+    // JSX rendering
     return (
-        <div className="max-w-sm rounded overflow-hidden shadow-lg my-2">
-            {post.image && (
+        <div
+            className={` max-w-sm rounded overflow-hidden shadow-lg my-4 bg-white ${
+                !post ? "h-64" : ""
+            }`}
+        >
+            {post && post.user_name && (
+                <div className="font-bold text-xl mb-2 flex items-center pt-2 px-4">
+                    {post.user_profile_picture && (
+                        <img
+                            src={post.user_profile_picture}
+                            alt="Profile"
+                            className="w-12 h-12 rounded-full mr-2"
+                        />
+                    )}
+                    {post.user_name}
+                </div>
+            )}
+
+            {post && post.image && (
                 <img className="w-full" src={post.image} alt="Post" />
             )}
             <div className="px-6 py-4">
-                {post.user_name && (
-                    <div className="font-bold text-xl mb-2">
-                        {post.user_name}
-                    </div>
-                )}
-                <p className="text-gray-700 text-base">{post.captions}</p>
-                <div className="flex pt-2">
+                <div className="flex items-center mb-2">
+                    {post.image && post.user_name && (
+                        <div className="font-bold text-xl mr-2">
+                            {post.user_name}
+                        </div>
+                    )}
+                    {post && (
+                        <p className="text-gray-700 text-base">
+                            {post.captions}
+                        </p>
+                    )}
+                </div>
+                <div className="flex">
                     {showDeleteButton && (
                         <FaTrash
                             className="pt-1"
                             size={24}
-                            // className="px-4 py-2 my-1 text-sm font-bold text-white bg-red-500 hover:bg-red-600 rounded focus:outline-none focus:shadow-outline transform transition-colors duration-150 ease-in-out"
                             onClick={() => handleDeletePost(post.post_id)}
                         >
                             Delete Post
                         </FaTrash>
                     )}
                     {/* Conditionally render the appropriate icon */}
-                    <div className=" inline-block">
+                    <div className="inline-block">
                         {isLiked ? (
                             <BiSolidLike
                                 className="pl-2"
                                 size={28}
                                 onClick={handleLikeClick}
-                            ></BiSolidLike>
+                            />
                         ) : (
                             <AiOutlineLike
                                 className="pl-2"
                                 size={28}
                                 onClick={handleLikeClick}
-                            ></AiOutlineLike>
+                            />
                         )}
                     </div>
                     <p className="pt-[0.3vh] pl-[0.4vw]">{likeCount}</p>
                 </div>
+                {/* Render the date posted below the icons */}
+                {date_posted && (
+                    <p className="text-sm text-gray-500 mt-2">
+                        {new Date(date_posted).toLocaleDateString()}
+                    </p>
+                )}
             </div>
         </div>
     );

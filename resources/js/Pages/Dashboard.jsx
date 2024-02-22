@@ -7,6 +7,8 @@ export default function Dashboard({
     auth,
     posts,
     user_portfolio,
+    user,
+    followingAmount,
     followersAmount,
 }) {
     console.log(posts);
@@ -82,14 +84,13 @@ export default function Dashboard({
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
                     <div style={{ display: "flex", alignItems: "center" }}>
                         {/* Profile Picture */}
-                        {user_portfolio &&
-                            user_portfolio.profile_picture_path && (
-                                <img
-                                    src={user_portfolio.profile_picture_path}
-                                    alt="Profile"
-                                    className="rounded-full h-12 w-12 object-cover mr-4"
-                                />
-                            )}
+                        {user && user.profile_picture_path && (
+                            <img
+                                src={user.profile_picture_path}
+                                alt="Profile"
+                                className="rounded-full h-12 w-12 object-cover mr-4"
+                            />
+                        )}
                         {auth.user.name}
                     </div>
                 </h2>
@@ -114,10 +115,17 @@ export default function Dashboard({
                                       ].join(", ")
                                     : "You haven't set a location yet"}
                             </p>
-                            <p className="px-2">
-                                <span className=" font-bold">Followers :</span>{" "}
-                                {followersAmount}
-                            </p>
+                            <div className="flex flex-col pl-2">
+                                <p>
+                                    <p className=" font-bold">
+                                        Followers : {followersAmount}
+                                    </p>
+                                    <p className=" font-bold">
+                                        {" "}
+                                        Following : {followingAmount}
+                                    </p>
+                                </p>
+                            </div>
                             <p className="font-weight-bolder text-2xl pl-2 pt-3">
                                 Description :
                             </p>
@@ -139,6 +147,10 @@ export default function Dashboard({
                             {posts && posts.length > 0 ? (
                                 posts.map((post) => (
                                     <PostCard
+                                        date_posted={post.created_at}
+                                        user_profile_picture={
+                                            post.user_profile_picture
+                                        }
                                         key={post.post_id}
                                         post={post}
                                         showDeleteButton={

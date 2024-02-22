@@ -12,6 +12,7 @@ export default function ProfilePage({
     profileUser,
     followStatus,
     followersAmount,
+    followingAmount,
 }) {
     const [localPosts, setLocalPosts] = useState(posts);
     const [isFollowing, setIsFollowing] = useState(followStatus);
@@ -142,10 +143,17 @@ export default function ProfilePage({
                                       ].join(", ")
                                     : "This user hasn't set a location yet"}
                             </p>
-                            <p>
-                                <span className=" font-bold">Followers : </span>
-                                {followersAmount}
-                            </p>
+                            <div className="flex flex-col">
+                                <p>
+                                    <p className=" font-bold">
+                                        Followers : {followersAmount}
+                                    </p>
+                                    <p className=" font-bold">
+                                        {" "}
+                                        Following : {followingAmount}
+                                    </p>
+                                </p>
+                            </div>
                             {isOwnProfile ? (
                                 <p
                                     className="text-center font-semibold bg-white
@@ -192,10 +200,18 @@ export default function ProfilePage({
                             {posts && posts.length > 0 ? (
                                 posts.map((post) => (
                                     <PostCard
+                                        date_posted={post.created_at}
+                                        user_profile_picture={
+                                            post.user_profile_picture
+                                        }
                                         key={post.post_id}
                                         post={post}
-                                        showDeleteButton={false}
-                                        onLike={() => handleLike(post.post_id)}
+                                        showDeleteButton={
+                                            post.user_id === auth.user.id
+                                                ? true
+                                                : false
+                                        }
+                                        onLike={handleLike}
                                     />
                                 ))
                             ) : (

@@ -163,6 +163,10 @@ export default function Browse({ auth, users, formattedPosts }) {
                             {formattedPosts &&
                                 formattedPosts.map((formattedPost) => (
                                     <PostCard
+                                        date_posted={formattedPost.created_at}
+                                        user_profile_picture={
+                                            formattedPost.profile_picture_path
+                                        }
                                         key={formattedPost.post_id}
                                         post={formattedPost}
                                         showDeleteButton={false}

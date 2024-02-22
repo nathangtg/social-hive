@@ -22,6 +22,7 @@ class BrowseController extends Controller
             $isLikedByCurrentUser = $post->likes->contains('user_id', $userId);
 
             return [
+                'user_profile_picture' =>$post->user->profile_picture_path,
                 'post_id' => $post->post_id, // Ensure this matches your post's primary key name
                 'user_id' => $post->user_id,
                 'image' => $post->image,

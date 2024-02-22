@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\UserPortfolio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -13,27 +14,42 @@ class PostController extends Controller
 {
     public function store(Request $request)
     {
+        Log::info('Creating a new post');
+
         $request->validate([
             'caption' => 'required|string',
-            'image' => 'required|image',
+            'image' => 'image|nullable', // Make the image field nullable
         ]);
 
-        $path = $request->file('image')->store('public/images', 'public');
+        // Retrieve the authenticated user's ID
+        $userId = Auth::id();
 
-        $path = 'storage/' .$path;
+        // Check if an image file is provided
+        if ($request->hasFile('image')) {
+            // If an image is provided, store it
+            $path = $request->file('image')->store('public/images', 'public');
+            $path = 'storage/' . $path;
+        } else {
+            // If no image is provided, set path to null or any default value
+            $path = null; // or any default path
+        }
 
+        // Create a new post instance
         $post = new Post();
         $post->post_id = $request->post_id;
-        $post->user_id = Auth::id();
+        $post->user_id = $userId;
         $post->captions = $request->caption;
-        $post->image = $path;
+        $post->image = $path; // Assign the path to the image field
         $post->save();
 
-        return redirect()->route('dashboard'); // Redirect after saving
+        // Redirect after saving
+        return redirect()->route('dashboard');
     }
+
 
     public function create()
     {
+        Log::info('Creating a new post');
         return Inertia::render('CreatePost');
     }
 
@@ -82,6 +98,7 @@ class PostController extends Controller
         $likeCount = $post->likes()->count();
 
         return response()->json([
+            'user_profile_picture' => Auth::user()->users->profile_picture_path, // Assuming the user has a userPortfolio relationship
             'success' => $message,
             'likeCount' => $likeCount,
             'isLikedByCurrentUser' => $isLikedByCurrentUser,

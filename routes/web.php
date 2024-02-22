@@ -50,7 +50,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/user/unfollow/{userId}', [UserRelationshipController::class, 'unfollow'])->name('user.unfollow');
     Route::delete('/post/{post_id}', [PostController::class, 'destroy'])->name('post.destroy');
     Route::post('/post/like/{post_id}', [PostController::class, 'like'])->name('post.like');
-
 });
 
 // ! BROWSE ROUTINGs
