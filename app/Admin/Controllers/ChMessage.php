@@ -12,8 +12,7 @@ class ChMessage extends AdminController
 {
     /**
      * Title for current resource.
-     *
-     * @var string
+     *     * @var string
      */
     protected $title = 'ChMessage';
 
