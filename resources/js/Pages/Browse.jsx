@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PostCard from "@/Components/PostCard";
 import UserButton from "@/Components/UserButton";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 
 export default function Browse({ auth, users, formattedPosts }) {
-    console.log(users);
-    console.log(formattedPosts);
-
     const [searchTerm, setSearchTerm] = useState("");
-    const [posts, setPosts] = useState(formattedPosts);
+    const [posts, setPosts] = useState([]);
 
     const usersArray = Array.isArray(users) ? users : [users];
+
+    useEffect(() => {
+        setPosts(formattedPosts);
+    }, [formattedPosts]);
 
     const handleLike = async (post_id) => {
         // First, optimistically update the UI to reflect the like/unlike action
@@ -92,13 +93,11 @@ export default function Browse({ auth, users, formattedPosts }) {
         setSearchTerm(event.target.value);
     };
 
-    const filteredUsers = searchTerm
-        ? usersArray.filter(
-              (user) =>
-                  user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                  user.email.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredPosts = searchTerm
+        ? posts.filter((post) =>
+              post.captions.toLowerCase().includes(searchTerm.toLowerCase())
           )
-        : usersArray;
+        : posts;
 
     return (
         <AuthenticatedLayout
@@ -125,7 +124,7 @@ export default function Browse({ auth, users, formattedPosts }) {
                         />
                     </div>
                     <ul>
-                        {filteredUsers.map((user, index) => {
+                        {usersArray.map((user, index) => {
                             if (!user.id) {
                                 console.warn("User without ID found:", user);
                                 return null; // Skip rendering this user
@@ -157,24 +156,32 @@ export default function Browse({ auth, users, formattedPosts }) {
                     </ul>
                     <div className="flex flex-col">
                         <div className="self-center mt-6">
-                            <h2>Browse Posts</h2>
+                            <h2 className="flex justify-center">
+                                Browse Posts
+                            </h2>
+                            <input
+                                type="text"
+                                placeholder="Search posts by caption..."
+                                value={searchTerm}
+                                onChange={handleSearchChange}
+                                className="p-2 border rounded-md self-center"
+                            />
                         </div>
                         <div className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 flex flex-col self-center justify-center">
-                            {formattedPosts &&
-                                formattedPosts.map((formattedPost) => (
-                                    <PostCard
-                                        date_posted={formattedPost.created_at}
-                                        user_profile_picture={
-                                            formattedPost.profile_picture_path
-                                        }
-                                        key={formattedPost.post_id}
-                                        post={formattedPost}
-                                        showDeleteButton={false}
-                                        onLike={() =>
-                                            handleLike(formattedPost.post_id)
-                                        }
-                                    />
-                                ))}
+                            {filteredPosts.map((formattedPost) => (
+                                <PostCard
+                                    date_posted={formattedPost.created_at}
+                                    user_profile_picture={
+                                        formattedPost.profile_picture_path
+                                    }
+                                    key={formattedPost.post_id}
+                                    post={formattedPost}
+                                    showDeleteButton={false}
+                                    onLike={() =>
+                                        handleLike(formattedPost.post_id)
+                                    }
+                                />
+                            ))}
                         </div>
                     </div>
                 </div>
