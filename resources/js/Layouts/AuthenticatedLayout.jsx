@@ -22,39 +22,55 @@ export default function Authenticated({ user, header, children }) {
                                         className="block h-12 w-12 fill-current text-gray-800"
                                     />
                                 </Link>
-                                <Link href="/">
-                                    <p className="pl-4">Social Hive</p>
-                                </Link>
+                                <span className="pl-4">Social Hive</span>
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
                                     href={route("dashboard")}
-                                    active={route().current("dashboard")}
+                                    active={
+                                        route().current("dashboard")
+                                            ? "true"
+                                            : undefined
+                                    }
                                 >
                                     Home
                                 </NavLink>
 
                                 <NavLink
                                     href={route("Browse")}
-                                    active={route().current("Browse")}
+                                    active={
+                                        route().current("Browse")
+                                            ? "true"
+                                            : undefined
+                                    }
                                 >
                                     Browse
                                 </NavLink>
 
                                 <NavLink
                                     href={route("create")}
-                                    active={route().current("create")}
+                                    active={
+                                        route().current("create")
+                                            ? "true"
+                                            : undefined
+                                    }
                                 >
                                     Create Post
                                 </NavLink>
 
-                                <NavLink
+                                <a
+                                    className="text-gray-500 hover:text-gray-700 hover:border-gray-300 hover:bg-gray-100  inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out focus:outline-none"
+                                    target="_blank"
                                     href="http://127.0.0.1:8000/chatify/"
-                                    active={route().current("chatify")}
+                                    active={
+                                        route().current("chatify")
+                                            ? "true"
+                                            : undefined
+                                    }
                                 >
                                     Hive Chatify
-                                </NavLink>
+                                </a>
                             </div>
                         </div>
 
@@ -155,21 +171,29 @@ export default function Authenticated({ user, header, children }) {
                     <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink
                             href={route("dashboard")}
-                            active={route().current("dashboard")}
+                            active={
+                                route().current("dashboard")
+                                    ? "true"
+                                    : undefined
+                            }
                         >
                             Dashboard
                         </ResponsiveNavLink>
 
                         <ResponsiveNavLink
                             href={route("Browse")}
-                            active={route().current("Browse")}
+                            active={
+                                route().current("Browse") ? "true" : undefined
+                            }
                         >
                             Browse
                         </ResponsiveNavLink>
 
                         <ResponsiveNavLink
                             href={route("create")}
-                            active={route().current("create")}
+                            active={
+                                route().current("create") ? "true" : undefined
+                            }
                         >
                             Create Post
                         </ResponsiveNavLink>
@@ -177,7 +201,9 @@ export default function Authenticated({ user, header, children }) {
                         <a
                             className="w-full flex items-start ps-3 pe-4 py-2 border-l-4"
                             href={route("chatify")}
-                            active={route().current("chatify")}
+                            active={
+                                route().current("chatify") ? "true" : undefined
+                            }
                         >
                             Hive Chatify
                         </a>

@@ -28,7 +28,7 @@ class PostController extends AdminController
 
         $grid->column('post_id', __('Post id'));
         $grid->column('user_id', __('User id'));
-        $grid->column('image', __('Image'));
+        $grid->column('image', __('Image'))->image();
         $grid->column('captions', __('Captions'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));

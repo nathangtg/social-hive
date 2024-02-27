@@ -116,7 +116,7 @@ export default function Dashboard({
                                     : "You haven't set a location yet"}
                             </p>
                             <div className="flex flex-col pl-2">
-                                <p>
+                                <div>
                                     <p className=" font-bold">
                                         Followers : {followersAmount}
                                     </p>
@@ -124,7 +124,7 @@ export default function Dashboard({
                                         {" "}
                                         Following : {followingAmount}
                                     </p>
-                                </p>
+                                </div>
                             </div>
                             <p className="font-weight-bolder text-2xl pl-2 pt-3">
                                 Description :

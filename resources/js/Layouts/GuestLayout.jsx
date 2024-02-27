@@ -9,7 +9,7 @@ export default function Guest({ children }) {
             style={{
                 backgroundClip: "border-box",
                 backgroundImage:
-                    'url("https://files.oaiusercontent.com/file-295HTfKYCtH6DyNpIHgdt4dn?se=2024-02-03T13%3A31%3A34Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D6015f888-b4e2-46cb-bfed-1c100adca0ef.webp&sig=DFxDGJlI6S8NdH5pD/qyxJgV6gBm7l/Qf4cxgCCVg8c%3D")',
+                    'url("https://static.vecteezy.com/system/resources/previews/007/238/606/large_2x/circles-geometry-gradient-background-with-yellow-and-orange-color-combination-presentation-background-design-suitable-for-presentation-poster-wallpaper-personal-website-ui-and-ux-experiences-free-photo.jpg")',
                 backgroundSize: "cover", // Cover the entire page
                 backgroundPosition: "center", // Center the background image
             }}

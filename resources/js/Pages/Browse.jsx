@@ -6,6 +6,7 @@ import { Head } from "@inertiajs/react";
 
 export default function Browse({ auth, users, formattedPosts }) {
     const [searchTerm, setSearchTerm] = useState("");
+    const [searchUserTerm, setSearchUserTerm] = useState("");
     const [posts, setPosts] = useState([]);
 
     const usersArray = Array.isArray(users) ? users : [users];
@@ -89,9 +90,21 @@ export default function Browse({ auth, users, formattedPosts }) {
             });
     }
 
+    // POST FILTERING
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
     };
+
+    // USER FILTERING
+    const handleUserSearchChange = (event) => {
+        setSearchUserTerm(event.target.value);
+    };
+
+    const filteredUsers = searchUserTerm
+        ? usersArray.filter((user) =>
+              user.name.toLowerCase().includes(searchUserTerm.toLowerCase())
+          )
+        : usersArray;
 
     const filteredPosts = searchTerm
         ? posts.filter((post) =>
@@ -118,13 +131,13 @@ export default function Browse({ auth, users, formattedPosts }) {
                         <input
                             type="text"
                             placeholder="Search users..."
-                            value={searchTerm}
-                            onChange={handleSearchChange}
+                            value={searchUserTerm}
+                            onChange={handleUserSearchChange}
                             className="p-2 border rounded-md self-center"
                         />
                     </div>
                     <ul>
-                        {usersArray.map((user, index) => {
+                        {filteredUsers.map((user, index) => {
                             if (!user.id) {
                                 console.warn("User without ID found:", user);
                                 return null; // Skip rendering this user
