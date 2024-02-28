@@ -94,16 +94,16 @@ export default function PostCard({
                 <img className="w-full" src={post.image} alt="Post" />
             )}
             <div className="px-6 py-4">
-                <div className="flex items-center mb-2">
-                    {post.image && post.user_name && (
-                        <div className="font-bold text-xl mr-2">
-                            {post.user_name}
+                <div className="flex mb-2">
+                    {post && post.user_name && (
+                        <div className="">
+                            <p className="font-bold text-xl mr-2">
+                                {post.user_name}
+                            </p>
+                            <p className="text-gray-700 text-base">
+                                {post.captions}
+                            </p>
                         </div>
-                    )}
-                    {post && (
-                        <p className="text-gray-700 text-base">
-                            {post.captions}
-                        </p>
                     )}
                 </div>
                 <div className="flex">
