@@ -41,4 +41,7 @@ This project is licensed under the MIT License - see the LICENSE.md file for det
 Acknowledgments
 Hat tip to all the libraries and frameworks that made this project possible.
 Special thanks to the ReactJS and Laravel communities for their invaluable resources and support.
+
+The demo of AppetiteConnect despite not being live, screenshots and snapshots are available in the link below;
+<a href="https://drive.google.com/drive/folders/11XCGi_jRacymGGPTBDIF8Bz22erbvzaV?usp=sharing" target="_blank"/>
 </p>
