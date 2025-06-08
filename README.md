@@ -167,22 +167,6 @@ project-root
 
 ---
 
-## ✅ **Testing**
-
-Run unit and feature tests using:
-
-```
-php artisan test
-```
-
-For UI tests, use:
-
-```
-npm run test
-```
-
----
-
 ## 📌 **Contributing**
 
 Feel free to submit pull requests or open issues. All contributions are welcome!
